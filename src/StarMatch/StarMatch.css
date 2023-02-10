@@ -26,16 +26,6 @@
   border: thin solid #ddd;
 }
 
-.star {
-  display: inline-block;
-  margin: 0 15px;
-}
-
-.star:after {
-  content: "\2605";
-  font-size: 50px;
-}
-
 .timer {
   color: #666;
   margin-top: 3px;

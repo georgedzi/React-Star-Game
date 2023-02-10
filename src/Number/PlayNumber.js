@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from 'prop-types';
 import './/PlayNumber.css'
 
-function PlayNumber(props) {
+const PlayNumber = (props) => {
     return (
-        <button className="number">{props.number}</button>
+        <button onClick={() => console.log(props.number)} className="number">{props.number}</button>
     )
 }
 
