@@ -1,15 +1,15 @@
 import React from "react"
 import PropTypes from 'prop-types';
-import './/Number.css'
+import './/PlayNumber.css'
 
-function Number(props) {
+function PlayNumber(props) {
     return (
         <button className="number">{props.number}</button>
     )
 }
 
-Number.propTypes = {
+PlayNumber.propTypes = {
     number: PropTypes.number.isRequired
 }
 
-export default Number
+export default PlayNumber
