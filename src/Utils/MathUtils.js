@@ -1,13 +1,5 @@
-
-const colors = {
-    available: 'lightgray',
-    used: 'lightgreen',
-    wrong: 'lightcoral',
-    candidate: 'deepskyblue',
-};
-
 // Math science
-const utils = {
+const mathUtils = {
     // Sum an array
     sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
 
@@ -25,16 +17,16 @@ const utils = {
         for (let i = 0; i < arr.length; i++) {
             for (let j = 0, len = sets.length; j < len; j++) {
                 const candidateSet = sets[j].concat(arr[i]);
-                const candidateSum = utils.sum(candidateSet);
+                const candidateSum = mathUtils.sum(candidateSet);
                 if (candidateSum <= max) {
                     sets.push(candidateSet);
                     sums.push(candidateSum);
                 }
             }
         }
-        return sums[utils.random(0, sums.length - 1)];
+        return sums[mathUtils.random(0, sums.length - 1)];
     },
 };
 
 
-export default utils
+export default mathUtils

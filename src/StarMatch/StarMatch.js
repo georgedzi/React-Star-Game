@@ -1,11 +1,28 @@
 import PlayNumber from "Number/PlayNumber";
 import React, { useState } from "react";
 import StarsDisplay from "StarsDisplay/StarsDisplay";
-import utils from "Utils/Utils";
+import mathUtils from "Utils/MathUtils";
 import ".//StarMatch.css"
 
 const StarMatch = () => {
-  const [stars, setStars] = useState(utils.random(1, 9));
+  const [stars, setStars] = useState(mathUtils.random(1, 9));
+  const [availableNumbs, setAvailableNumbs] = useState([1, 2, 3, 4, 5]);
+  const [candidateNumbs, setcandidateNumbs] = useState([2, 3]);
+
+  const candidatesAreWrong = mathUtils.sum(candidateNumbs) > stars;
+
+  const numberStatus = (number) => {
+    if (!availableNumbs.includes(number)) {
+      return 'used';
+    }
+
+    if (candidateNumbs.includes(number)) {
+      return candidatesAreWrong ? 'wrong' : 'candidate';
+    }
+
+
+    return 'available';
+  }
 
   return (
     <div className="game">
@@ -17,8 +34,11 @@ const StarMatch = () => {
           <StarsDisplay count={stars} />
         </div>
         <div className="right">
-          {utils.range(1, 9).map(number =>
-            <PlayNumber key={number} number={number} />
+          {mathUtils.range(1, 9).map(number =>
+            <PlayNumber
+              key={number}
+              status={numberStatus(number)}
+              number={number} />
           )}
         </div>
       </div>

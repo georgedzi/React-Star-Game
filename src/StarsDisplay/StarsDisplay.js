@@ -1,12 +1,12 @@
 import React from "react"
-import utils from "Utils/Utils"
+import mathUtils from "Utils/MathUtils";
 import PropTypes from 'prop-types';
 import './StarsDisplay.css'
 
 const StarsDisplay = (props) => {
     return (
         <>
-            {utils.range(1, props.count).map(starId =>
+            { mathUtils.range(1, props.count).map(starId =>
                 <div key={starId} className="star" />
             )}
         </>
