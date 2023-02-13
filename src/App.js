@@ -1,5 +1,5 @@
-import React from 'react';
-import StarMatch from 'StarMatch/StarMatch';
+import React from "react";
+import StarMatch from "StarMatch/StarMatch";
 
 function App() {
   return (
