@@ -11,14 +11,25 @@ const StarMatch = () => {
   const [candidateNumbs, setCandidateNumbs] = useState([]);
   const [secondsLeft, setSecondsLeft] = useState(10);
 
+  useEffect(() => {
+    if (secondsLeft <= 0 || gameStatus !== "active") return;
+    const timerId = setTimeout(() => {
+      setSecondsLeft(secondsLeft - 1);
+    }, 1000)
+    return () => clearTimeout(timerId);
+  }, [secondsLeft]); // add secondsLeft to dependency array to only update on secondsLeft change and not PlayButton changes
 
   const candidatesAreWrong = mathUtils.sum(candidateNumbs) > stars;
-  const gameIsDone = availableNumbs.length === 0;
+
+  const gameStatus = availableNumbs.length === 0
+    ? "won"
+    : secondsLeft === 0 ? "lost" : "active";
 
   const resetGame = () => {
     setStars(mathUtils.random(1, 9));
-    setAvailableNumbs(mathUtils.range(1,9));
+    setAvailableNumbs(mathUtils.range(1, 9));
     setCandidateNumbs([]);
+    setSecondsLeft(10);
   }
 
   const numberStatus = (number) => {
@@ -34,7 +45,7 @@ const StarMatch = () => {
   }
 
   const onNumberClick = (number, currentStatus) => {
-    if (currentStatus == "used") return;
+    if (currentStatus == "used" || gameStatus !== "active") return;
 
     const newCandidateNumbs = currentStatus == "available" ?
       candidateNumbs.concat(number)
@@ -59,8 +70,8 @@ const StarMatch = () => {
       <div className="body">
         <div className="left">
           {
-            gameIsDone ?
-              <PlayAgain onClick={resetGame} />
+            gameStatus !== "active" ?
+              <PlayAgain onClick={resetGame} gameStatus={gameStatus} />
               : <StarsDisplay count={stars} />
           }
 
