@@ -7,7 +7,7 @@ import colors from "Utils/Colors";
 const PlayNumber = (props) => {
     return (
         <button
-            onClick={() => console.log(props.number)}
+            onClick={() => props.onClick(props.number, props.status)}
             className="number"
             style={{backgroundColor: colors[props.status]}}
         >
@@ -18,7 +18,8 @@ const PlayNumber = (props) => {
 
 PlayNumber.propTypes = {
     number: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired
+    status: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
 }
 
 export default PlayNumber

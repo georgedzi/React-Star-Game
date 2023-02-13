@@ -6,12 +6,15 @@ import ".//StarMatch.css"
 
 const StarMatch = () => {
   const [stars, setStars] = useState(mathUtils.random(1, 9));
-  const [availableNumbs, setAvailableNumbs] = useState([1, 2, 3, 4, 5]);
-  const [candidateNumbs, setcandidateNumbs] = useState([2, 3]);
+  const [availableNumbs, setAvailableNumbs] = useState(mathUtils.range(1, 9));
+  const [candidateNumbs, setCandidateNumbs] = useState([]);
 
   const candidatesAreWrong = mathUtils.sum(candidateNumbs) > stars;
 
+  let orderOfExecution = 0
+
   const numberStatus = (number) => {
+    console.log(`numberStatus - order of execution: ${++orderOfExecution}`);
     if (!availableNumbs.includes(number)) {
       return 'used';
     }
@@ -22,6 +25,27 @@ const StarMatch = () => {
 
 
     return 'available';
+  }
+
+  const onNumberClick = (number, currentStatus) => {
+    console.log(`onNumberClick - order of execution: ${++orderOfExecution}`);
+    if (currentStatus == 'used') return;
+
+
+    const newCandidateNumbs = currentStatus == 'available' ?
+      candidateNumbs.concat(number)
+      : candidateNumbs.filter(cn => cn !== number);
+
+    if (mathUtils.sum(newCandidateNumbs) !== stars) {
+      setCandidateNumbs(newCandidateNumbs);
+    }
+    else {
+      const newAvailableNumbs = availableNumbs.filter(n => !newCandidateNumbs.includes(n));
+      setStars(mathUtils.randomSumIn(newAvailableNumbs, 9))
+      setAvailableNumbs(newAvailableNumbs);
+      setCandidateNumbs([]);
+    }
+
   }
 
   return (
@@ -38,7 +62,8 @@ const StarMatch = () => {
             <PlayNumber
               key={number}
               status={numberStatus(number)}
-              number={number} />
+              number={number}
+              onClick={onNumberClick} />
           )}
         </div>
       </div>
