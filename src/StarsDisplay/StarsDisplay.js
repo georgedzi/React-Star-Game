@@ -1,7 +1,7 @@
 import React from "react"
 import mathUtils from "Utils/MathUtils";
-import PropTypes from 'prop-types';
-import './StarsDisplay.css'
+import PropTypes from "prop-types";
+import "./StarsDisplay.css"
 
 const StarsDisplay = (props) => {
     return (

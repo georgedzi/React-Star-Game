@@ -1,6 +1,6 @@
 import PlayNumber from "Number/PlayNumber";
 import PlayAgain from "PlayAgain/PlayAgain";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StarsDisplay from "StarsDisplay/StarsDisplay";
 import mathUtils from "Utils/MathUtils";
 import ".//StarMatch.css"
@@ -9,6 +9,8 @@ const StarMatch = () => {
   const [stars, setStars] = useState(mathUtils.random(1, 9));
   const [availableNumbs, setAvailableNumbs] = useState(mathUtils.range(1, 9));
   const [candidateNumbs, setCandidateNumbs] = useState([]);
+  const [secondsLeft, setSecondsLeft] = useState(10);
+
 
   const candidatesAreWrong = mathUtils.sum(candidateNumbs) > stars;
   const gameIsDone = availableNumbs.length === 0;
@@ -19,27 +21,22 @@ const StarMatch = () => {
     setCandidateNumbs([]);
   }
 
-
   const numberStatus = (number) => {
-
     if (!availableNumbs.includes(number)) {
-      return 'used';
+      return "used";
     }
 
     if (candidateNumbs.includes(number)) {
-      return candidatesAreWrong ? 'wrong' : 'candidate';
+      return candidatesAreWrong ? "wrong" : "candidate";
     }
 
-
-    return 'available';
+    return "available";
   }
 
   const onNumberClick = (number, currentStatus) => {
+    if (currentStatus == "used") return;
 
-    if (currentStatus == 'used') return;
-
-
-    const newCandidateNumbs = currentStatus == 'available' ?
+    const newCandidateNumbs = currentStatus == "available" ?
       candidateNumbs.concat(number)
       : candidateNumbs.filter(cn => cn !== number);
 
@@ -52,7 +49,6 @@ const StarMatch = () => {
       setAvailableNumbs(newAvailableNumbs);
       setCandidateNumbs([]);
     }
-
   }
 
   return (
@@ -79,7 +75,7 @@ const StarMatch = () => {
           )}
         </div>
       </div>
-      <div className="timer">Time Remaining: 10</div>
+      <div className="timer">{`Time Remaining: ${secondsLeft}`}</div>
     </div>
   );
 };
