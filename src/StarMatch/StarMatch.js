@@ -1,4 +1,5 @@
 import PlayNumber from "Number/PlayNumber";
+import PlayAgain from "PlayAgain/PlayAgain";
 import React, { useState } from "react";
 import StarsDisplay from "StarsDisplay/StarsDisplay";
 import mathUtils from "Utils/MathUtils";
@@ -10,11 +11,17 @@ const StarMatch = () => {
   const [candidateNumbs, setCandidateNumbs] = useState([]);
 
   const candidatesAreWrong = mathUtils.sum(candidateNumbs) > stars;
+  const gameIsDone = availableNumbs.length === 0;
 
-  let orderOfExecution = 0
+  const resetGame = () => {
+    setStars(mathUtils.random(1, 9));
+    setAvailableNumbs(mathUtils.range(1,9));
+    setCandidateNumbs([]);
+  }
+
 
   const numberStatus = (number) => {
-    console.log(`numberStatus - order of execution: ${++orderOfExecution}`);
+
     if (!availableNumbs.includes(number)) {
       return 'used';
     }
@@ -28,7 +35,7 @@ const StarMatch = () => {
   }
 
   const onNumberClick = (number, currentStatus) => {
-    console.log(`onNumberClick - order of execution: ${++orderOfExecution}`);
+
     if (currentStatus == 'used') return;
 
 
@@ -55,7 +62,12 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          <StarsDisplay count={stars} />
+          {
+            gameIsDone ?
+              <PlayAgain onClick={resetGame} />
+              : <StarsDisplay count={stars} />
+          }
+
         </div>
         <div className="right">
           {mathUtils.range(1, 9).map(number =>
