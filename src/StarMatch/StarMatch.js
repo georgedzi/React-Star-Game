@@ -3,9 +3,10 @@ import PlayAgain from "PlayAgain/PlayAgain";
 import React, { useEffect, useState } from "react";
 import StarsDisplay from "StarsDisplay/StarsDisplay";
 import mathUtils from "Utils/MathUtils";
+import ProtoType from "prop-types"
 import ".//StarMatch.css"
 
-const StarMatch = () => {
+const StarMatch = (props) => {
   const [stars, setStars] = useState(mathUtils.random(1, 9));
   const [availableNumbs, setAvailableNumbs] = useState(mathUtils.range(1, 9));
   const [candidateNumbs, setCandidateNumbs] = useState([]);
@@ -24,13 +25,6 @@ const StarMatch = () => {
   const gameStatus = availableNumbs.length === 0
     ? "won"
     : secondsLeft === 0 ? "lost" : "active";
-
-  const resetGame = () => {
-    setStars(mathUtils.random(1, 9));
-    setAvailableNumbs(mathUtils.range(1, 9));
-    setCandidateNumbs([]);
-    setSecondsLeft(10);
-  }
 
   const numberStatus = (number) => {
     if (!availableNumbs.includes(number)) {
@@ -71,7 +65,7 @@ const StarMatch = () => {
         <div className="left">
           {
             gameStatus !== "active" ?
-              <PlayAgain onClick={resetGame} gameStatus={gameStatus} />
+              <PlayAgain onClick={props.startNewGame} gameStatus={gameStatus} />
               : <StarsDisplay count={stars} />
           }
 
@@ -90,5 +84,9 @@ const StarMatch = () => {
     </div>
   );
 };
+
+StarMatch.propTypes = {
+  startNewGame: ProtoType.func.isRequired
+}
 
 export default StarMatch;

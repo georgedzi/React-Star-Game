@@ -1,10 +1,10 @@
+import Game from "Game/Game";
 import React from "react";
-import StarMatch from "StarMatch/StarMatch";
 
 function App() {
   return (
     <div >
-      <StarMatch />
+      <Game />
     </div>
   );
 }
