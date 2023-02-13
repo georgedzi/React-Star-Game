@@ -80,7 +80,10 @@ const StarMatch = (props) => {
           )}
         </div>
       </div>
-      <div className="timer">{`Time Remaining: ${secondsLeft}`}</div>
+      <div className="timer">{gameStatus === "active"
+        ? `Time Remaining: ${secondsLeft}`
+        : "Time Remaining: --"}
+      </div>
     </div>
   );
 };
